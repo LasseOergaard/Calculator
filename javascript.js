@@ -7,8 +7,12 @@ let currentOperator;
 displayTop = document.querySelector(".calculator__display__top")
 displayButtom = document.querySelector(".calculator__display__buttom")
 displayHidden = document.querySelector(".calculator__display__hidden")
+numberButtons = document.querySelectorAll(".number-button")
+operatorButtons = document.querySelectorAll(".operator-button")
+clearButton = document.querySelector(".clear-button")
 
-numberButtons = document.querySelectorAll(".calculator__buttons__left-buttom button")
+
+/* EventListeners */
 numberButtons.forEach(button => {
   button.addEventListener("click", () => {
 
@@ -46,7 +50,7 @@ numberButtons.forEach(button => {
 
 
 
-operatorButtons = document.querySelectorAll(".calculator__buttons__right button")
+
 operatorButtons.forEach(button => button.addEventListener("click", () => {
   if (button.textContent == "+") {
     if (typeof currentOperator == "undefined") {
@@ -154,7 +158,6 @@ operatorButtons.forEach(button => button.addEventListener("click", () => {
   }
 }));
 
-clearButton = document.querySelector(".clear-button")
 clearButton.addEventListener("click", () => {
   displayTop.textContent = "";
   displayButtom.textContent = "";
