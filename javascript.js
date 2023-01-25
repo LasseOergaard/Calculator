@@ -9,19 +9,42 @@ displayButtom = document.querySelector(".calculator__display__buttom")
 displayHidden = document.querySelector(".calculator__display__hidden")
 
 numberButtons = document.querySelectorAll(".calculator__buttons__left-buttom button")
-numberButtons.forEach(button => {button.addEventListener("click", () => {
-  if (typeof currentOperator != "undefined") {
-    displayHidden.textContent += button.textContent
-  } 
+numberButtons.forEach(button => {
+  button.addEventListener("click", () => {
+
     if (button.textContent == ".") {
-      if ((displayTop.textContent.match(/./g) || []).length > 1) {
-        console.log("hey")
-        return;
+      if (currentOperator == undefined) {
+        if ((displayTop.textContent.split(".")).length > 1) {
+          return;
+        } else { displayTop.textContent += button.textContent; }
       }
-      else {displayTop.textContent += button.textContent;}}
-    else {displayTop.textContent += button.textContent}
-  })});
-  
+
+      else if (currentOperator !== undefined) {
+        if (parseFloat(displayValueTop) % 1 === 0) {
+          if ((displayTop.textContent.split(".")).length > 1) {
+            return;
+          } else { displayTop.textContent += button.textContent;
+            displayHidden.textContent += button.textContent }
+        }
+
+        else {
+          if (displayTop.textContent.split(".").length > 2) {
+            return;
+          } else {
+            displayTop.textContent += button.textContent;
+            displayHidden.textContent += button.textContent
+          }
+        }
+      }
+    }
+    else { displayTop.textContent += button.textContent }
+
+    if (currentOperator !== undefined && button.textContent !== ".") {displayHidden.textContent += button.textContent}
+  })
+});
+
+
+
 
 operatorButtons = document.querySelectorAll(".calculator__buttons__right button")
 operatorButtons.forEach(button => button.addEventListener("click", () => {
@@ -38,15 +61,15 @@ operatorButtons.forEach(button => button.addEventListener("click", () => {
       if (displayValueButtom == "") {
         return;
       }
-      displayHidden.textContent =""
+      displayHidden.textContent = ""
       let output = operate()
       displayTop.textContent = `${output}+`
       displayButtom.textContent = `${output}`
       displayValueTop = output;
       displayValueButtom = ""
-      currentOperator = "add"; 
+      currentOperator = "add";
     }
-    
+
   } else if (button.textContent == "-") {
     if (typeof currentOperator == "undefined") {
       displayValueTop = displayTop.textContent;
@@ -64,29 +87,30 @@ operatorButtons.forEach(button => button.addEventListener("click", () => {
       displayValueTop = output;
       displayValueButtom = ""
       currentOperator = "subtract";
-    }}
+    }
+  }
 
-    else if (button.textContent == "*") {
-      if (typeof currentOperator == "undefined") {
-        if (displayValueTop == "undefined") {
-          return;
-        }
-        displayValueTop = displayTop.textContent;
-        currentOperator = "multiply";
-        displayTop.textContent += "*"
-      } else {
-        displayValueButtom = displayHidden.textContent
-        if (displayValueButtom == "") {
-          return;
-        }
-        displayHidden.textContent = ""
-        let output = operate()
-        displayTop.textContent = `${output}*`
-        displayButtom.textContent = `${output}`
-        displayValueTop = output;
-        displayValueButtom = ""
-        currentOperator = "multiply"; 
+  else if (button.textContent == "*") {
+    if (typeof currentOperator == "undefined") {
+      if (displayValueTop == "undefined") {
+        return;
       }
+      displayValueTop = displayTop.textContent;
+      currentOperator = "multiply";
+      displayTop.textContent += "*"
+    } else {
+      displayValueButtom = displayHidden.textContent
+      if (displayValueButtom == "") {
+        return;
+      }
+      displayHidden.textContent = ""
+      let output = operate()
+      displayTop.textContent = `${output}*`
+      displayButtom.textContent = `${output}`
+      displayValueTop = output;
+      displayValueButtom = ""
+      currentOperator = "multiply";
+    }
 
   }
 
@@ -109,35 +133,38 @@ operatorButtons.forEach(button => button.addEventListener("click", () => {
       displayButtom.textContent = `${output}`
       displayValueTop = output;
       displayValueButtom = ""
-      currentOperator = "divide"; 
+      currentOperator = "divide";
     }
+  }
 
-
-    
-}
-
-else if (button.textContent == "=") {
-  displayValueTop = displayTop.textContent;
-  displayValueButtom = displayHidden.textContent
-  let output = operate()
-  displayTop.textContent = `${output}`
-  displayButtom.textContent = `${output}`
-  currentOperator = undefined
-  displayValueTop = output;
-  displayValueButtom = ""
-  displayHidden.textContent = ""
-}}));
+  else if (button.textContent == "=") {
+    displayValueButtom = displayHidden.textContent
+    if (displayValueButtom == undefined || displayValueButtom == "") {
+      return;
+    } else {
+      displayValueTop = displayTop.textContent;
+      let output = operate()
+      displayTop.textContent = `${output}`
+      displayButtom.textContent = `${output}`
+      currentOperator = undefined
+      displayValueTop = output;
+      displayValueButtom = ""
+      displayHidden.textContent = ""
+    }
+  }
+}));
 
 clearButton = document.querySelector(".clear-button")
-clearButton.addEventListener("click", () => {displayTop.textContent = "";
+clearButton.addEventListener("click", () => {
+  displayTop.textContent = "";
   displayButtom.textContent = "";
-  displayValueButtom = ""
-  displayValueTop = ""
+  displayValueButtom = undefined
+  displayValueTop = undefined
   currentOperator = undefined
 
 })
 
-function operate () {
+function operate() {
   if (currentOperator == "add") {
     return (parseFloat(displayValueTop) + parseFloat(displayValueButtom))
   } else if (currentOperator == "subtract") {
