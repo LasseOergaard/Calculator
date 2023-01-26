@@ -52,41 +52,41 @@ numberButtons.forEach(button => {
 
 
 operatorButtons.forEach(button => button.addEventListener("click", () => {
-  if (button.textContent == "+") {
+  if (button.classList.contains("add")) {
     if (typeof currentOperator == "undefined") {
       if (displayValueTop == "undefined") {
         return;
       }
       displayValueTop = displayTop.textContent;
       currentOperator = "add";
-      displayTop.textContent += "+"
+      displayTop.textContent += " " + "+" + " "
     } else {
       displayValueButtom = displayHidden.textContent
       if (displayValueButtom == "") {
         return;
       }
       displayHidden.textContent = ""
-      let output = operate()
-      displayTop.textContent = `${output}+`
+      let output = Math.round(operate() * 10000) / 10000 
+      displayTop.textContent = `${output}` +" " + "+" + " "
       displayButtom.textContent = `${output}`
       displayValueTop = output;
       displayValueButtom = ""
       currentOperator = "add";
     }
 
-  } else if (button.textContent == "-") {
+  } else if (button.classList.contains("subtract")) {
     if (typeof currentOperator == "undefined") {
       displayValueTop = displayTop.textContent;
       currentOperator = "subtract";
-      displayTop.textContent += "-"
+      displayTop.textContent += " " + "−" + " "
     } else {
       displayValueButtom = displayHidden.textContent
       if (displayValueButtom == "") {
         return;
       }
       displayHidden.textContent = ""
-      let output = operate()
-      displayTop.textContent = `${output}-`
+      let output = Math.round(operate() * 10000) / 10000
+      displayTop.textContent = `${output}`+" " + "−" + " "
       displayButtom.textContent = `${output}`
       displayValueTop = output;
       displayValueButtom = ""
@@ -94,22 +94,22 @@ operatorButtons.forEach(button => button.addEventListener("click", () => {
     }
   }
 
-  else if (button.textContent == "*") {
+  else if (button.classList.contains("multiply")) {
     if (typeof currentOperator == "undefined") {
       if (displayValueTop == "undefined") {
         return;
       }
       displayValueTop = displayTop.textContent;
       currentOperator = "multiply";
-      displayTop.textContent += "*"
+      displayTop.textContent += " " + "×" + " "
     } else {
       displayValueButtom = displayHidden.textContent
       if (displayValueButtom == "") {
         return;
       }
       displayHidden.textContent = ""
-      let output = operate()
-      displayTop.textContent = `${output}*`
+      let output = Math.round(operate() * 10000) / 10000
+      displayTop.textContent = `${output}` +" " + "×" + " "
       displayButtom.textContent = `${output}`
       displayValueTop = output;
       displayValueButtom = ""
@@ -118,22 +118,22 @@ operatorButtons.forEach(button => button.addEventListener("click", () => {
 
   }
 
-  else if (button.textContent == "/") {
+  else if (button.classList.contains("divide")) {
     if (typeof currentOperator == "undefined") {
       if (displayValueTop == "undefined") {
         return;
       }
       displayValueTop = displayTop.textContent;
       currentOperator = "divide";
-      displayTop.textContent += "/"
+      displayTop.textContent += " " + "÷" + " "
     } else {
       displayValueButtom = displayHidden.textContent
       if (displayValueButtom == "") {
         return;
       }
       displayHidden.textContent = ""
-      let output = operate()
-      displayTop.textContent = `${output}/`
+      let output = Math.round(operate() * 10000) / 10000
+      displayTop.textContent = `${output}`+" " + "÷" + " "
       displayButtom.textContent = `${output}`
       displayValueTop = output;
       displayValueButtom = ""
@@ -141,13 +141,13 @@ operatorButtons.forEach(button => button.addEventListener("click", () => {
     }
   }
 
-  else if (button.textContent == "=") {
+  else if (button.classList.contains("equal")) {
     displayValueButtom = displayHidden.textContent
     if (displayValueButtom == undefined || displayValueButtom == "") {
       return;
     } else {
       displayValueTop = displayTop.textContent;
-      let output = operate()
+      let output = Math.round(operate() * 10000) / 10000
       displayTop.textContent = `${output}`
       displayButtom.textContent = `${output}`
       currentOperator = undefined
