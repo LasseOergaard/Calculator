@@ -69,12 +69,15 @@ button {
 .number-button {
   transition: all 0.15s;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 26px;
 }
 
 .number-button:hover {
   background-color: rgb(34, 166, 140);
   
+}
+.number-button:active {
+  opacity: 0.9;
 }
 
 
@@ -88,7 +91,9 @@ button {
 
 .operator-button:hover{
   background-color: rgb(12, 48, 45);
-
+}
+.operator-button:active {
+  opacity: 0.97;
 }
 
 .add {
@@ -106,10 +111,13 @@ button {
 .clear-button:hover {
   background-color: rgb(193, 56, 56);
 }
+.clear-button:active {
+  opacity: 0.9;
+}
 
 .footer {
   background-color: white;
-margin-top: -3px;
+  margin-top: -3px;
   padding: 10px;
   text-align: center;
   font-weight: 600;
